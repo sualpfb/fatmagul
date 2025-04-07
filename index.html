@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>EN SEVDİĞİM MİNİK KUŞUMA</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Fatmagül'e Özel Bir Mesaj</h1>
+        <p>Aşağıdaki kodu girersen sana özel bir sürpriz var 🎁</p>
+
+        <input type="text" id="serial" placeholder="Serial kodu gir" required>
+        <button onclick="kontrolEt()">Gönder</button>
+
+        <p id="sonuc" style="margin-top: 20px;"></p>
+    </div>
+
+    <script>
+        function kontrolEt() {
+            const dogruKod = "S3N1-C0KE-S3V0-0408";  // ← senin belirlediğin serial buraya
+            const kullaniciKodu = document.getElementById("serial").value.trim();
+            const sonuc = document.getElementById("sonuc");
+
+            if (kullaniciKodu === dogruKod) {
+                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";  // ← yönlendirilecek link buraya
+            } else {
+                sonuc.innerHTML = "❌ Hatalı kod! Lütfen tekrar dene.";
+            }
+        }
+    </script>
+</body>
+</html>
