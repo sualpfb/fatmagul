@@ -120,3 +120,26 @@ button.danger:hover {
     background-color: #f44336;
     color: white;
 }
+.big-button {
+    display: block;
+    padding: 20px;
+    margin: 20px 0;
+    background-color: #ff4d6d;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+}
+
+.big-button:hover {
+    background-color: #e63b5d;
+}
+
+.big-button.disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+    pointer-events: none;
+}
