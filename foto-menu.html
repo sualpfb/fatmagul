@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Fotoğraf Albümümüz 📸</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <style>
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        a.back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff4d6d;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        a.back-button:hover {
+            background-color: #e63b5d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💞 Anılarımızdan Birkaç Kare 💞</h1>
+
+        <div class="gallery">
+            <img src="static/fotograflar/foto1.jpg" alt="Fotoğraf 1">
+            <img src="static/fotograflar/foto2.jpg" alt="Fotoğraf 2">
+            <img src="static/fotograflar/foto3.jpg" alt="Fotoğraf 3">
+            <img src="static/fotograflar/foto4.jpg" alt="Fotoğraf 4">
+            <!-- İstediğin kadar çoğaltabilirsin -->
+        </div>
+
+        <a href="video-menu.html" class="back-button">🔙 Geri Dön</a>
+    </div>
+</body>
+</html>
