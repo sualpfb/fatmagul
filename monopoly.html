@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Monopoly Aşk Oyunu 🎲</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="static/monopoly.js" defer></script>
+    <style>
+        #oyun-alani {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        #log {
+            background-color: white;
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .oyuncu-bilgi {
+            margin: 10px 0;
+        }
+
+        .zar-butonu {
+            padding: 12px 24px;
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .zar-butonu:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💘 AŞKOPOLY'ye Hoş Geldiniz 💘</h1>
+        
+        <div class="oyuncu-bilgi" id="oyuncular"></div>
+        
+        <button class="zar-butonu" onclick="turBaslat()" id="zarBtn">🎲 ZAR AT</button>
+
+        <div id="oyun-alani">
+            <h3>Oyun Günlüğü 📜</h3>
+            <div id="log"></div>
+        </div>
+
+        <a href="video-menu.html" class="back-button">🔙 Geri Dön</a>
+    </div>
+</body>
+</html>
