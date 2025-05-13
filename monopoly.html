@@ -2,58 +2,121 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Monopoly Aşk Oyunu 🎲</title>
+    <title>Monopoly - Aşk Oyunu</title>
     <link rel="stylesheet" href="static/styles.css">
-    <script src="static/monopoly.js" defer></script>
     <style>
-        #oyun-alani {
-            margin-top: 20px;
-            text-align: left;
+        body {
+            background-color: #ffe6f0;
+            flex-direction: column;
         }
 
-        #log {
-            background-color: white;
-            padding: 10px;
-            height: 200px;
-            overflow-y: auto;
-            border-radius: 8px;
+        .board-container {
+            background-image: url('static/fotograflar/monopoly-tahta.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 600px;
+            height: 600px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .player-token {
+            width: 30px;
+            height: 30px;
+            background-color: gold;
+            border-radius: 50%;
+            position: absolute;
+            transition: all 0.5s ease;
+            z-index: 2;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .log {
             margin-top: 10px;
-        }
-
-        .oyuncu-bilgi {
-            margin: 10px 0;
-        }
-
-        .zar-butonu {
-            padding: 12px 24px;
-            background-color: #ff4d6d;
-            color: white;
-            border: none;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #fff;
+            padding: 10px;
             border-radius: 8px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .zar-butonu:disabled {
-            background-color: #aaa;
-            cursor: not-allowed;
+            width: 90%;
+            max-width: 600px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>💘 AŞKOPOLY'ye Hoş Geldiniz 💘</h1>
-        
-        <div class="oyuncu-bilgi" id="oyuncular"></div>
-        
-        <button class="zar-butonu" onclick="turBaslat()" id="zarBtn">🎲 ZAR AT</button>
+        <h1>🎲 Aşk Monopoly'sine Hoş Geldin!</h1>
 
-        <div id="oyun-alani">
-            <h3>Oyun Günlüğü 📜</h3>
-            <div id="log"></div>
+        <div class="board-container" id="board">
+            <div class="player-token" id="player1"></div>
         </div>
 
-        <a href="video-menu.html" class="back-button">🔙 Geri Dön</a>
+        <div class="controls">
+            <button onclick="zarAt()">🎲 Zar At</button>
+            <button onclick="oyunuSifirla()">🔄 Oyunu Sıfırla</button>
+        </div>
+
+        <div class="log" id="log"></div>
     </div>
+
+    <script>
+        const kareKonumlari = [
+            [0, 540], [60, 540], [120, 540], [180, 540], [240, 540],
+            [300, 540], [360, 540], [420, 540], [480, 540], [540, 540],
+            [540, 480], [540, 420], [540, 360], [540, 300], [540, 240],
+            [540, 180], [540, 120], [540, 60], [540, 0], [480, 0]
+        ];
+
+        let konum = 0;
+        let para = 1500;
+        const log = document.getElementById("log");
+        const oyuncu = document.getElementById("player1");
+
+        function logla(mesaj) {
+            log.innerHTML += `<div>➡️ ${mesaj}</div>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function guncelleKonum() {
+            const [x, y] = kareKonumlari[konum];
+            oyuncu.style.left = x + "px";
+            oyuncu.style.top = y + "px";
+        }
+
+        function zarAt() {
+            const zar = Math.floor(Math.random() * 6) + 1;
+            konum = (konum + zar) % kareKonumlari.length;
+            logla(`Zar atıldı: ${zar} ➡️ Yeni konum: ${konum}`);
+
+            guncelleKonum();
+
+            setTimeout(() => {
+                const satinAl = confirm(`Kareye geldin: ${konum}. Satın almak ister misin?`);
+                if (satinAl) {
+                    logla(`✅ Satın alındı! Kalan para: ${para -= 100}`);
+                } else {
+                    logla(`⏭ Satın alınmadı.`);
+                }
+            }, 500);
+        }
+
+        function oyunuSifirla() {
+            konum = 0;
+            para = 1500;
+            guncelleKonum();
+            log.innerHTML = "";
+            logla("Oyun sıfırlandı.");
+        }
+
+        window.onload = () => {
+            guncelleKonum();
+            logla("Oyun başladı.");
+        }
+    </script>
 </body>
 </html>
