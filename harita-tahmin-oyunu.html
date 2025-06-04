@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Harita Tahmin Oyunu</title>
+
+    <!-- Senin pembe temana uyacak CSS -->
+    <link rel="stylesheet" href="static/styles.css" />
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-sA+e2gWkBtV1VzwMcy4R2wwHIdOcX7jDUa2NkxPsa6w="
+      crossorigin=""
+    />
+
+    <style>
+      /* Haritanın kutusu */
+      #map {
+        height: 400px;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+      /* Sonuç yazısı */
+      #sonuc {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        text-shadow: 0 0 5px #000;
+      }
+      /* Buton */
+      #yeni-oyun {
+        margin-top: 15px;
+        padding: 12px 25px;
+        background-color: #ff4d6d;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        transition: background-color 0.3s ease;
+      }
+      #yeni-oyun:hover {
+        background-color: #e63b5d;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Harita Tahmin Oyunu 🗺️</h1>
+        <p>
+          Rastgele seçilen bir konum Google Haritalar'da açılacak.<br />
+          Sen de aşağıdaki haritada tahminini yap, ne kadar yakın olduğunu gör!
+        </p>
+
+        <button id="google-harita-btn" class="big-button">Google Haritalar'da Konumu Göster</button>
+
+        <div id="map"></div>
+
+        <div id="sonuc"></div>
+
+        <button id="yeni-oyun" style="display:none;">YENİ OYUN</button>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-o9N1j6EGeIGTyZ3S7cc0xKMWtD6hNRe+qI4o+rcC3bM="
+      crossorigin=""
+    ></script>
+
+    <script>
+      // Rastgele koordinat üret (deniz veya karada olabilir)
+      function rastgeleKoordinat() {
+        // Enlem: -85 ila 85 arasında (kutup dışı)
+        // Boylam: -180 ila 180 arasında
+        const lat = (Math.random() * 170) - 85;
+        const lng = (Math.random() * 360) - 180;
+        return [lat, lng];
+      }
+
+      // Haversine formülü ile iki koordinat arası mesafe (km)
+      function mesafeHesapla(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Dünya yarıçapı km
+        const toRad = (deg) => (deg * Math.PI) / 180;
+
+        const dLat = toRad(lat2 - lat1);
+        const dLon = toRad(lon2 - lon1);
+
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(toRad(lat1)) *
+            Math.cos(toRad(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // km cinsinden mesafe
+      }
+
+      // Puanlama fonksiyonu (mesafeye göre)
+      function puanHesapla(mesafeKm) {
+        // Mesafe 0 ise max 100 puan
+        // 0-1000 km arası lineer azalıyor
+        // 1000 km üstü puan 0
+        if (mesafeKm < 0) return 0;
+        if (mesafeKm > 1000) return 0;
+        return Math.round(100 - (mesafeKm / 1000) * 100);
+      }
+
+      let hedefKoordinat;
+      let tahminMarker;
+      let hedefMarker;
+      let map;
+
+      function oyunBaslat() {
+        hedefKoordinat = rastgeleKoordinat();
+
+        // Haritayı oluştur
+        map = L.map("map").setView([0, 0], 2);
+
+        // Harita katmanı (OpenStreetMap)
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 18,
+          attribution:
+            '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        // Önceki markerlar varsa temizle
+        if (tahminMarker) map.removeLayer(tahminMarker);
+        if (hedefMarker) map.removeLayer(hedefMarker);
+
+        document.getElementById("sonuc").innerHTML = "";
+        document.getElementById("yeni-oyun").style.display = "none";
+
+        // Harita tıklama olayını ekle
+        map.on("click", function (e) {
+          if (tahminMarker) {
+            alert("Zaten tahmin yaptın. Yeni oyun için 'YENİ OYUN' butonuna bas!");
+            return;
+          }
+
+          const tahmin = e.latlng;
+          tahminMarker = L.marker(tahmin).addTo(map).bindPopup("Tahminin").openPopup();
+
+          // Hedef noktayı işaretle
+          hedefMarker = L.marker(hedefKoordinat, {opacity: 0.6})
+            .addTo(map)
+            .bindPopup("Doğru Konum")
+            .openPopup();
+
+          const mesafe = mesafeHesapla(
+            tahmin.lat,
+            tahmin.lng,
+            hedefKoordinat[0],
+            hedefKoordinat[1]
+          );
+
+          const puan = puanHesapla(mesafe);
+
+          document.getElementById("sonuc").innerHTML = `
+            Tahminin, hedef konuma <b>${mesafe.toFixed(2)} km</b> uzaklıkta.<br/>
+            Puanın: <b>${puan}</b> / 100
+          `;
+
+          document.getElementById("yeni-oyun").style.display = "inline-block";
+        });
+
+        // Google Harita butonuna basınca hedefi yeni sekmede aç
+        document
+          .getElementById("google-harita-btn")
+          .addEventListener("click", function () {
+            const url = `https://www.google.com/maps?q=${hedefKoordinat[0]},${hedefKoordinat[1]}`;
+            window.open(url, "_blank");
+          });
+      }
+
+      // Yeni oyun butonu
+      document.getElementById("yeni-oyun").addEventListener("click", () => {
+        // Haritayı ve skorları sıfırla
+        map.off();
+        map.remove();
+        oyunBaslat();
+      });
+
+      // Sayfa yüklenince oyunu başlat
+      window.onload = oyunBaslat;
+    </script>
+</body>
+</html>
