@@ -4,15 +4,88 @@
     <meta charset="UTF-8">
     <title>Sürprizler Başlasın!</title>
     <link rel="stylesheet" href="static/styles.css">
+    <style>
+        .counter-box {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            color: #ec407a;
+            font-weight: bold;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        .love-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: #555;
+            border: 2px dashed #ff80ab;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎉 Sürprizler Başlasın Minik Kuşum 💖</h1>
+        <h1>Minik Kuşum Hoşgeldin 💖</h1>
 
-        <a href="https://youtu.be/nmIdZozIEW4" class="big-button">TANIŞMA VİDEOMUZA GİTMEK İÇİN TIKLA</a>
-        <a href="foto-album.html" class="big-button">FOTOĞRAF ALBÜMÜNE GİTMEK İÇİN TIKLA</a>
-        <a href="monopoly.html" class="big-button">MONOPOLY (BAŞLA 🕹️)</a>
-        <a href="harita-tahmin-oyunu.html" class="big-button">HARİTA TAHMİN OYUNU (BAŞLA 🗺️)</a>
+        <div class="counter-box">
+            <div id="sayac">Hesaplanıyor...</div>
+            <div style="font-size: 12px; color: #888; margin-top:5px;">Seni her saniye daha çok seviyorum</div>
+        </div>
+
+        <h3>💌 Neden Seni Seviyorum?</h3>
+        <div class="love-card" id="loveText">
+            Öğrenmek için aşağıdaki butona tıkla...
+        </div>
+        <button onclick="yeniSebep()" style="background-color: #ff80ab;">Yeni Bir Kart Çek 🃏</button>
+
+        <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.1); margin: 20px 0;">
+
+        <a href="https://youtu.be/nmIdZozIEW4" class="big-button">🎬 TANIŞMA VİDEOMUZ</a>
+        <a href="foto-album.html" class="big-button">📸 FOTOĞRAF ALBÜMÜ</a>
+        <a href="monopoly.html" class="big-button">🕹️ MONOPOLY OYNA</a>
+        
     </div>
+
+    <script>
+        /* --- SAYAÇ KODU --- */
+        function sureHesapla() {
+            // BURAYI KENDİ TARİHİNLE DEĞİŞTİR: YIL, AY (0'dan başlar: Ocak=0), GÜN
+            const baslangic = new Date(2023, 7, 4); // Örnek: 4 Ağustos 2023
+            const simdi = new Date();
+            const fark = simdi - baslangic;
+
+            const gun = Math.floor(fark / (1000 * 60 * 60 * 24));
+            const saat = Math.floor((fark % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const dakika = Math.floor((fark % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById("sayac").innerHTML = 
+                `${gun} Gün, ${saat} Saat, ${dakika} Dakikadır Birlikteyiz!`;
+        }
+        setInterval(sureHesapla, 1000); // Her saniye güncelle
+        sureHesapla(); // İlk açılışta çalıştır
+
+        /* --- SEVGİ KARTLARI KODU --- */
+        const sebepler = [
+            "Çünkü güldüğünde gözlerinin içi gülüyor.",
+            "Bana her zaman destek olduğun için.",
+            "Dünyanın en güzel kalbine sahip olduğun için.",
+            "Benimle saçmalayabildiğin için.",
+            "Kötü günlerimi güzelleştirdiğin için.",
+            "Senin yanındayken zamanın nasıl geçtiğini anlamadığım için.",
+            "Bana kendimi özel hissettirdiğin için."
+            // Buraya istediğin kadar sebep ekleyebilirsin, tırnak içinde ve virgülle ayırarak.
+        ];
+
+        function yeniSebep() {
+            const rastgeleSayi = Math.floor(Math.random() * sebepler.length);
+            document.getElementById("loveText").innerText = sebepler[rastgeleSayi];
+        }
+    </script>
 </body>
 </html>
