@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aşk Kuponları 🎟️</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <style>
+        /* Bu sayfaya özel stiller */
+        .coupon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .coupon {
+            background: white;
+            border: 3px dashed #81d4fa; /* Mavi kesikli çizgiler */
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+
+        .coupon:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .coupon h3 {
+            color: #ec407a;
+            margin: 10px 0;
+        }
+
+        .coupon p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .emoji {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Kullanılan Kupon Stili */
+        .coupon.used {
+            background-color: #f0f0f0;
+            border-color: #ccc;
+            opacity: 0.7;
+            pointer-events: none; /* Tıklanmayı engeller */
+        }
+
+        .coupon.used::after {
+            content: "KULLANILDI ✔️";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4d6d;
+            border: 4px solid #ff4d6d;
+            padding: 5px 10px;
+            border-radius: 10px;
+            opacity: 0.8;
+        }
+
+        .use-btn {
+            background-color: #81d4fa;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .use-btn:hover {
+            background-color: #4fc3f7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" style="max-width: 800px;">
+        <h1>🎟️ Aşk Kuponları 🎟️</h1>
+        <p>İstediğin zaman bu kuponları bana karşı kullanabilirsin minik kuşum! <br> Ama dikkat et, her biri tek kullanımlık! 😉</p>
+
+        <div class="coupon-grid">
+            
+            <div class="coupon" id="coupon1">
+                <span class="emoji">💆‍♀️</span>
+                <h3>30 Dk Masaj</h3>
+                <p>Günün yorgunluğunu atman için özel masaj servisi.</p>
+                <button class="use-btn" onclick="kuponKullan('coupon1')">Şimdi Kullan</button>
+            </div>
+
+            <div class="coupon" id="coupon2">
+                <span class="emoji">🎬</span>
+                <h3>Film Seçme Hakkı</h3>
+                <p>Bugün mızmızlanmadan senin seçtiğin filmi izliyoruz.</p>
+                <button class="use-btn" onclick="kuponKullan('coupon2')">Şimdi Kullan</button>
+            </div>
+
+            <div class="coupon" id="coupon3">
+                <span class="emoji">🍔</span>
+                <h3>Özel Yemek İsteği</h3>
+                <p>Sen ne istersen onu yiyoruz (ya da ben yapıyorum!).</p>
+                <button class="use-btn" onclick="kuponKullan('coupon3')">Şimdi Kullan</button>
+            </div>
+
+            <div class="coupon" id="coupon4">
+                <span class="emoji">🤐</span>
+                <h3>"Haklısın" Kartı</h3>
+                <p>Tartışmayı anında bitirir, sen haklı olursun.</p>
+                <button class="use-btn" onclick="kuponKullan('coupon4')">Şimdi Kullan</button>
+            </div>
+
+            <div class="coupon" id="coupon5">
+                <span class="emoji">🍫</span>
+                <h3>Tatlı Krizi Çözücü</h3>
+                <p>Anında en sevdiğin çikolata/tatlı temin edilir.</p>
+                <button class="use-btn" onclick="kuponKullan('coupon5')">Şimdi Kullan</button>
+            </div>
+
+            <div class="coupon" id="coupon6">
+                <span class="emoji">🚙</span>
+                <h3>Gece Gezmesi</h3>
+                <p>Nereye istersen oraya sürüyoruz, müzik senden.</p>
+                <button class="use-btn" onclick="kuponKullan('coupon6')">Şimdi Kullan</button>
+            </div>
+
+        </div>
+
+        <a href="video-menu.html" class="back-button">🔙 Menüye Dön</a>
+    </div>
+
+    <script>
+        // Sayfa yüklendiğinde daha önce kullanılan kuponları kontrol et
+        window.onload = function() {
+            for (let i = 1; i <= 6; i++) {
+                let kuponId = 'coupon' + i;
+                if (localStorage.getItem(kuponId) === 'used') {
+                    markAsUsed(kuponId);
+                }
+            }
+        };
+
+        function kuponKullan(id) {
+            // Emin misin diye soralım
+            if (confirm("Bu kuponu kullanmak istediğine emin misin minik kuşum? Geri dönüşü yok! 😲")) {
+                // Tarayıcı hafızasına kaydet
+                localStorage.setItem(id, 'used');
+                // Görünümü güncelle
+                markAsUsed(id);
+                alert("Kupon başarıyla kullanıldı! Talimat alındı komutanım 🫡");
+            }
+        }
+
+        function markAsUsed(id) {
+            const el = document.getElementById(id);
+            el.classList.add('used');
+            el.querySelector('button').innerText = "Kullanıldı";
+        }
+    </script>
+</body>
+</html>
