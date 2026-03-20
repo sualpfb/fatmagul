@@ -2,98 +2,197 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Sürprizler Başlasın!</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <title>Arşiv Kapandı</title>
     <style>
-        .counter-box {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            color: #ec407a;
-            font-weight: bold;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-        }
-        .love-card {
-            background: #fff;
+        body {
+            background-color: #121212;
+            color: #666;
+            font-family: 'Courier New', Courier, monospace; /* Daha sistemsel/kasvetli bir font */
+            text-align: center;
             padding: 20px;
-            border-radius: 15px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #444;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            font-family: sans-serif;
+            letter-spacing: 2px;
+        }
+        
+        /* Donmuş Buz Efekti */
+        .frozen-box {
+            background: rgba(160, 180, 200, 0.05);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            color: #8da4b3;
+            font-weight: bold;
+            font-family: sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 15px rgba(200, 220, 240, 0.05), 0 0 10px rgba(0,0,0,0.8);
+            backdrop-filter: blur(3px); /* Buzlu cam hissi */
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        /* Buz üzerindeki kırık/soğuk parlama detayı */
+        .frozen-box::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.03) 50%, transparent 60%);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .love-card {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
             margin: 20px 0;
             min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-style: italic;
+            color: #444;
+            border: 1px dashed #333;
+            letter-spacing: 3px;
+            word-break: break-all;
+        }
+        
+        button {
+            background-color: #222;
+            color: #666;
+            border: 1px solid #333;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            position: relative;
+        }
+        button:hover {
+            background-color: #2a2a2a;
+        }
+
+        .big-button {
+            display: block;
+            background: #181818;
             color: #555;
-            border: 2px dashed #ff80ab;
+            text-decoration: none;
+            padding: 15px;
+            margin: 12px 0;
+            border: 1px solid #2a2a2a;
+            border-radius: 5px;
+            position: relative;
+            transition: 0.3s;
+            font-family: sans-serif;
+        }
+        .big-button:hover {
+            background: #222;
+        }
+
+        /* Örümcek Ağı Efektleri */
+        .cobweb-right::after {
+            content: '🕸️';
+            position: absolute;
+            top: -5px;
+            right: 5px;
+            font-size: 24px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        .cobweb-left::before {
+            content: '🕸️';
+            position: absolute;
+            bottom: -5px;
+            left: 5px;
+            font-size: 24px;
+            opacity: 0.15;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Minik Kuşum Hoşgeldin 💖</h1>
+        <h1>Arşiv Kapandı</h1>
 
-        <div class="counter-box">
-            <div id="sayac">Hesaplanıyor...</div>
-            <div style="font-size: 12px; color: #888; margin-top:5px;">Seni her saniye daha çok seviyorum</div>
+        <div class="frozen-box">
+            <div id="sayac">Zaman Hesaplanıyor...</div>
+            <div style="font-size: 12px; color: #555; margin-top:10px; font-weight: normal;">Zaman burada dondu (17 Mart 2026, 19:00)</div>
         </div>
 
-        <h3>💌 Neden Seni Seviyorum?</h3>
+        <h3 style="color: #444; font-family: sans-serif;">Kayıtlar...</h3>
         <div class="love-card" id="loveText">
-            Öğrenmek için aşağıdaki butona tıkla...
+            Veriye ulaşılamıyor.
         </div>
-        <button onclick="yeniSebep()" style="background-color: #ff80ab;">Yeni Bir Kart Çek 🃏</button>
+        <button onclick="yeniSebep()" class="cobweb-right">Kayıtları Çözümlemeyi Dene</button>
 
-        <hr style="border: 0; border-top: 1px solid rgba(0,0,0,0.1); margin: 20px 0;">
+        <hr style="border: 0; border-top: 1px solid #222; margin: 30px 0;">
 
-        <a href="https://youtu.be/nmIdZozIEW4" class="big-button">🎬 TANIŞMA VİDEOMUZ</a>
-        <a href="foto-album.html" class="big-button">📸 FOTOĞRAF ALBÜMÜ</a>
-        <a href="monopoly.html" class="big-button">🕹️ MONOPOLY OYNA</a>
-        <a href="ask-kuponlari.html" class="big-button">🎟️ AŞK KUPONLARI (TIKLA)</a>
+        <a href="#" class="big-button cobweb-right">🎬 TANIŞMA VİDEOMUZ (Kayıp)</a>
+        <a href="#" class="big-button cobweb-left">📸 FOTOĞRAF ALBÜMÜ (Şifrelendi)</a>
+        <a href="#" class="big-button">🕹️ MONOPOLY (Sunucu Kapalı)</a>
+        <a href="#" class="big-button cobweb-right">🎟️ AŞK KUPONLARI (Geçersiz)</a>
         
     </div>
 
     <script>
-        /* --- SAYAÇ KODU --- */
-        function sureHesapla() {
-            // BURAYI KENDİ TARİHİNLE DEĞİŞTİR: YIL, AY (0'dan başlar: Ocak=0), GÜN
-            const baslangic = new Date(2024, 7, 8); // Örnek: 4 Ağustos 2023
-            const simdi = new Date();
-            const fark = simdi - baslangic;
+        /* --- DONMUŞ SAYAÇ KODU --- */
+        function donmusSureHesapla() {
+            // Başlangıç tarihi: 8 Ağustos 2024 (Senin eski kodundan alındı)
+            const baslangic = new Date(2024, 7, 8, 0, 0, 0); 
+            // Bitiş tarihi: 17 Mart 2026, Saat 19:00
+            const bitis = new Date(2026, 2, 17, 19, 0, 0); 
+            
+            const fark = bitis - baslangic;
 
             const gun = Math.floor(fark / (1000 * 60 * 60 * 24));
             const saat = Math.floor((fark % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const dakika = Math.floor((fark % (1000 * 60 * 60)) / (1000 * 60));
 
+            // setInterval yok, kod sadece bir kez çalışıp süreyi kalıcı olarak donduruyor.
             document.getElementById("sayac").innerHTML = 
-                `${gun} Gün, ${saat} Saat, ${dakika} Dakikadır Birlikteyiz!`;
+                `${gun} Gün, ${saat} Saat, ${dakika} Dakika`;
         }
-        setInterval(sureHesapla, 1000); // Her saniye güncelle
-        sureHesapla(); // İlk açılışta çalıştır
+        
+        donmusSureHesapla();
 
-        /* --- SEVGİ KARTLARI KODU --- */
-        const sebepler = [
-            "Çünkü güldüğünde gözlerinin içi gülüyor.",
-            "Bana her zaman destek olduğun için.",
-            "Dünyanın en güzel kalbine sahip olduğun için.",
-            "Benimle saçmalayabildiğin için.",
-            "Kötü günlerimi güzelleştirdiğin için.",
-            "Senin yanındayken zamanın nasıl geçtiğini anlamadığım için.",
-            "Bana kendimi özel hissettirdiğin için.",
-            "Çünkü en sessiz anlarda bile beni anladığını hissettiriyorsun.",
-            "Yanımdayken kendim olmak zorunda kalmadığım tek kişi olduğun için.",
-            "Küçük şeylerden büyük mutluluklar çıkarabildiğin için.",
-            "Bana güven verdiğin ve bunu hissettirdiğin için.",
-            "Beni olduğum hâlimle sevdiğini bildiğim için.",
-            "Hayatın telaşı içinde bana “dur” demeyi öğrettiğin için.",
-            "En basit anları bile birlikteyken anlamlı kıldığın için.",
-            "Seni sevmek bana doğal ve doğru geldiği için.",
-            // Buraya istediğin kadar sebep ekleyebilirsin, tırnak içinde ve virgülle ayırarak.
-        ];
+        /* --- BİNARY GLITCH KART KODU --- */
+        let isGlitching = false;
 
         function yeniSebep() {
-            const rastgeleSayi = Math.floor(Math.random() * sebepler.length);
-            document.getElementById("loveText").innerText = sebepler[rastgeleSayi];
+            if (isGlitching) return; // Animasyon bitmeden tekrar basılmasını engeller
+            isGlitching = true;
+            
+            const card = document.getElementById("loveText");
+            let count = 0;
+            const maxCount = 25; // 2.5 saniye sürecek
+            
+            const generateBinary = () => {
+                let binary = "";
+                for(let i = 0; i < 24; i++) {
+                    binary += Math.floor(Math.random() * 2);
+                    if((i + 1) % 8 === 0) binary += " "; // 8 bitlik boşluklar
+                }
+                return binary;
+            };
+
+            const glitchInterval = setInterval(() => {
+                card.innerText = generateBinary();
+                card.style.color = "#777";
+                count++;
+                
+                if (count >= maxCount) {
+                    clearInterval(glitchInterval);
+                    card.innerText = "????????";
+                    card.style.color = "#333"; // Sona erdiğinde çok soluk bir renk
+                    isGlitching = false;
+                }
+            }, 100);
         }
     </script>
 </body>
