@@ -1,109 +1,92 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-M051G6F3G1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-M051G6F3G1');
-</script>
-
-
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kapanış 🥀</title>
+    <title>Giriş Kapısı 🗝️</title>
+    <link rel="stylesheet" href="static/styles.css">
     <style>
-        body {
-            background-color: #1a1a1a;
-            color: #888;
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+        /* Sadece bu sayfaya özel animasyonlar */
+        .heart-beat {
+            font-size: 50px;
+            animation: beat 1s infinite alternate;
+            margin-bottom: 20px;
+            display: inline-block;
         }
-        .container {
-            text-align: center;
-            background: #2a2a2a;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.8);
-            border: 1px solid #333;
-            max-width: 400px;
+
+        @keyframes beat {
+            to { transform: scale(1.2); }
         }
-        h1 {
-            color: #555;
-            letter-spacing: 5px;
-            margin-bottom: 5px;
-        }
+
         .login-input {
-            background: #222;
-            border: 1px solid #444;
-            color: #666;
+            background: #fff;
+            border: 2px solid #81d4fa;
+            color: #555;
             text-align: center;
-            font-size: 16px;
-            padding: 12px;
-            width: 80%;
-            margin-top: 25px;
+            font-size: 18px;
+            letter-spacing: 2px;
             transition: 0.3s;
-            opacity: 0.4; /* Soluk görünüm */
         }
+
         .login-input:focus {
-            outline: none;
-            border-color: #555;
+            border-color: #ec407a;
+            box-shadow: 0 0 10px rgba(236, 64, 122, 0.2);
+        }
+
+        .hint {
+            font-size: 12px;
+            color: #ec407a;
+            margin-top: 10px;
             opacity: 0.7;
-        }
-        button {
-            background-color: #333;
-            color: #888;
-            border: 1px solid #444;
-            padding: 10px 20px;
-            margin-top: 20px;
             cursor: pointer;
-            transition: 0.3s;
-            border-radius: 5px;
-            letter-spacing: 1px;
         }
-        button:hover {
-            background-color: #444;
-            color: #aaa;
-        }
-        #sonuc {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #666;
+        
+        .hint:hover {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div style="font-size: 40px; margin-bottom: 10px; opacity: 0.3;">🕰️</div>
-        <h1>KAPANIŞ</h1>
-        <p style="opacity: 0.5; font-size: 14px;">İçeride birtakım geçmiş var.</p>
+        <div class="heart-beat">💖</div>
+        <h1>AŞK DOĞRULAMA KAPISI</h1>
+        <p>İçeride seni bekleyen sürprizler var minik kuşum.</p>
 
-        <input type="text" id="serial" class="login-input" placeholder="artık şifreye gerek yok...">
-        <br>
-        <button onclick="kontrolEt()">İçeri Gir</button>
+        <input type="text" id="serial" class="login-input" placeholder="Şifremizi Gir..." required>
+        <button onclick="kontrolEt()" style="background-color: #ec407a;">Kilidi Aç 🔓</button>
 
-        <p id="sonuc"></p>
+        <p id="sonuc" style="margin-top: 20px; font-weight: bold;"></p>
+        
+        <div class="hint" onclick="alert('İpucu: Baş harflerimiz ve tanışma tarihimiz olabilir mi? S3N1-C0K3...')">
+            Şifreyi unuttun mu? (İpucu için tıkla)
+        </div>
     </div>
 
     <script>
         function kontrolEt() {
+            // ŞİFRE BURADA
+            const dogruKod = "S3N1-C0K3-S3V0-0408"; 
+            const kullaniciKodu = document.getElementById("serial").value.trim();
             const sonuc = document.getElementById("sonuc");
-            // Şifre kontrolü tamamen kaldırıldı.
-            sonuc.innerHTML = "Bağlantı kuruluyor... Arşive yönlendiriliyorsunuz.";
-            setTimeout(() => {
-                window.location.href = "video-menu.html";
-            }, 1200);
-        }
 
+            if (kullaniciKodu === dogruKod) {
+                sonuc.style.color = "#4CAF50";
+                sonuc.innerHTML = "Doğrulandı! Yönlendiriliyorsun... 💕";
+                // 1 saniye bekleyip yönlendirir (animasyon için)
+                setTimeout(() => {
+                    window.location.href = "video-menu.html";
+                }, 1000);
+            } else {
+                sonuc.style.color = "#f44336";
+                sonuc.innerHTML = "❌ Hatalı kod! Bir daha dene aşkım.";
+                
+                // Hatalı girince kutuyu sallar
+                const input = document.getElementById("serial");
+                input.style.borderColor = "red";
+                setTimeout(() => { input.style.borderColor = "#81d4fa"; }, 500);
+            }
+        }
+        
         // Enter tuşuna basınca da giriş yapsın
         document.getElementById("serial").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
